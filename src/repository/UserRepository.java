@@ -112,7 +112,7 @@ public class UserRepository {
         }
     }
     public static User searchUser(){
-        User user = new User();
+        User user = null;
         String sql = "SELECT * FROM users WHERE user_uuid = ?";
         try(Connection connection = ConnectDb.connectToDb()) {
             PreparedStatement ps = connection.prepareStatement(sql);

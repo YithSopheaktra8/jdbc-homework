@@ -38,7 +38,11 @@ public class View {
                 }
                 case 3 -> {
                     User user = userController.searchUser();
-                    PrintAsTable.printAsTableOneUser(user);
+                    if(user != null){
+                        PrintAsTable.printAsTableOneUser(user);
+                    }else {
+                        System.out.println("User not found");
+                    }
                     ui();
                 }
                 case 4 -> {
