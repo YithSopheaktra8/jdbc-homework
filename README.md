@@ -8,7 +8,7 @@ _Below is an example of how you can install and setting up your app.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/YithSopheaktra8/stock-management-system.git
+   git clone https://github.com/YithSopheaktra8/jdbc-homework
    ```
 2. Open the project in your IDE
 
