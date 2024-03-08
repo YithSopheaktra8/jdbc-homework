@@ -72,5 +72,49 @@ public class UserRepository {
             System.out.println(e.getMessage());
         }
     }
+    public static User searchUser(){
+        User user = new User();
+        String sql = "SELECT * FROM users WHERE user_uuid = ?";
+        try(Connection connection = ConnectDb.connectToDb()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String userUuid = Validate.validateInputString("Enter user uuid: ", "Invalid uuid", "^[a-zA-Z0-9-]+$", new Scanner(System.in));
+            ps.setString(1, userUuid);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                user = User.builder()
+                        .userId(resultSet.getInt("user_id"))
+                        .userUuid(resultSet.getString("user_uuid"))
+                        .userName(resultSet.getString("user_name"))
+                        .userEmail(resultSet.getString("user_email"))
+                        .userPassword(resultSet.getString("user_password"))
+                        .isDeleted(resultSet.getBoolean("is_deleted"))
+                        .isVerified(resultSet.getBoolean("is_verified"))
+                        .build();
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
+
+    public static void updateUser(List<User> users){
+        String sql = "UPDATE users SET user_name = ?, user_email = ?, user_password = ? WHERE user_uuid = ?";
+        try(Connection connection = ConnectDb.connectToDb()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String userUuid = Validate.validateInputString("Enter user uuid: ", "Invalid uuid", "^[a-zA-Z0-9-]+$", new Scanner(System.in));
+            User user = users.stream().filter(u -> u.getUserUuid().equals(userUuid)).findFirst().orElseThrow();
+            user.setUserName(Validate.validateInputString("Enter your name: ", "Invalid name", "^[a-zA-Z ]+$", new Scanner(System.in)));
+            user.setUserEmail(Validate.validateInputString("Enter your email: ", "Invalid email", "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", new Scanner(System.in)));
+            user.setUserPassword(Validate.validateInputString("Enter your password: ", "Password must be 8 characters with number and 1 Uppercase with special character\n example : Tra@1234", "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", new Scanner(System.in)));
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserEmail());
+            ps.setString(3, user.getUserPassword());
+            ps.setString(4, user.getUserUuid());
+            ps.executeUpdate();
+            System.out.println("User updated successfully");
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

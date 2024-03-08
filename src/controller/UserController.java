@@ -14,6 +14,13 @@ public class UserController {
     public void addUser(User user){
         userDao.addUser(user);
     }
+
+    public User searchUser(){
+        return userDao.searchUser();
+    }
+    public void updateUser(List<User> users){
+        userDao.updateUser(users);
+    }
     public void deleteUser(List<User> users){
         userDao.deleteUser(users);
     }
