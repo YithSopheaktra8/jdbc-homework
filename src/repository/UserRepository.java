@@ -36,4 +36,8 @@ public class UserRepository {
         return users;
     }
 
+    public static void addUser(){
+
+    }
+
 }
