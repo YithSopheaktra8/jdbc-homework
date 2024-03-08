@@ -21,6 +21,10 @@ public class UserController {
     public void updateUser(List<User> users){
         userDao.updateUser(users);
     }
+    public void setUserVerified(List<User> user){
+        userDao.setUserVerified(user);
+    }
+
     public void deleteUser(List<User> users){
         userDao.deleteUser(users);
     }

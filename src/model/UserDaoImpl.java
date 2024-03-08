@@ -26,6 +26,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void setUserVerified(List<User> user) {
+        UserRepository.setVerifyUser(user);
+    }
+
+    @Override
     public void deleteUser(List<User> users) {
         UserRepository.deleteUser(users);
     }

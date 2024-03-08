@@ -7,6 +7,7 @@ public interface UserDao {
     void addUser(User user);
     User searchUser();
     void updateUser(List<User> users);
+    void setUserVerified(List<User> user);
 
     void deleteUser(List<User> users);
 }

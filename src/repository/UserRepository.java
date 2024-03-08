@@ -117,4 +117,17 @@ public class UserRepository {
         }
     }
 
+    public static void setVerifyUser(List<User> users) {
+        String sql = "UPDATE users SET is_verified = true WHERE user_uuid = ?";
+        try (Connection connection = ConnectDb.connectToDb()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            String userUuid = Validate.validateInputString("Enter user uuid: ", "Invalid uuid", "^[a-zA-Z0-9-]+$", new Scanner(System.in));
+            User user = users.stream().filter(u -> u.getUserUuid().equals(userUuid)).findFirst().orElseThrow();
+            ps.setString(1, user.getUserUuid());
+            ps.executeUpdate();
+            System.out.println("User verification status updated successfully");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

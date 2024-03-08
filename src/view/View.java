@@ -12,6 +12,7 @@ public class View {
     public static User user = new User();
 
     public static void ui() {
+        System.out.println("*".repeat(50));
         System.out.println("Welcome to User Management System");
         System.out.println("1. Add User");
         System.out.println("2. View All User");
@@ -20,6 +21,7 @@ public class View {
         System.out.println("5. Set verify to User");
         System.out.println("6. Delete User");
         System.out.println("7. Exit");
+        System.out.println("*".repeat(50));
         System.out.println("Please select an option: ");
         int option = 0;
         do {
@@ -47,6 +49,10 @@ public class View {
                 }
                 case 4 -> {
                     userController.updateUser(userList);
+                    ui();
+                }
+                case 5 -> {
+                    userController.setUserVerified(userList);
                     ui();
                 }
                 case 6 -> {
