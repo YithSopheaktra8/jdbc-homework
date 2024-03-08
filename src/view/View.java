@@ -3,6 +3,7 @@ package view;
 import controller.UserController;
 import model.User;
 import utils.PrintAsTable;
+import utils.Validate;
 
 import java.util.List;
 
@@ -22,16 +23,15 @@ public class View {
         System.out.println("6. Delete User");
         System.out.println("7. Exit");
         System.out.println("*".repeat(50));
-        System.out.println("Please select an option: ");
         int option = 0;
         do {
-            List<User> userList = userController.userList();
-            option = new java.util.Scanner(System.in).nextInt();
+            List<User> userList = userController.userListToList();
+            option = Validate.validateInputInt("Please input a number: ", "Please input a number: ", "^[1-7]$", new java.util.Scanner(System.in));
             switch (option) {
                 case 1 -> {
                     userController.addUser(user);
                     System.out.println("Do you want to add another user? (yes/no)");
-                    String choice = new java.util.Scanner(System.in).nextLine();
+                    String choice = Validate.validateInputString("Please input yes or no: ", "Please input yes or no: ", "yes|no", new java.util.Scanner(System.in));
                     if (choice.equalsIgnoreCase("yes")) {
                         userController.addUser(user);
                     } else {
@@ -39,7 +39,8 @@ public class View {
                     }
                 }
                 case 2 -> {
-                    PrintAsTable.printAsTable(userList);
+                    List<User> users = userController.userList();
+                    PrintAsTable.printAsTable(users);
                     ui();
                 }
                 case 3 -> {

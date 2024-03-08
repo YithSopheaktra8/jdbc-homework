@@ -6,6 +6,11 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     @Override
+    public List<User> getAllUserToList() {
+        return UserRepository.getAllUserToList();
+    }
+
+    @Override
     public List<User> getAllUser() {
         return UserRepository.getAllUsers();
     }

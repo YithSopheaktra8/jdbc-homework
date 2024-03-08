@@ -18,4 +18,18 @@ public class Validate {
                 System.out.println(error);
         }
     }
+
+    public static int validateInputInt(String s, String s1, String s2, Scanner scanner) {
+        while (true){
+            System.out.print(s);
+            String choice = scanner.nextLine();
+            Pattern pattern = Pattern.compile(s2);
+            Matcher matcher = pattern.matcher(choice);
+            if(matcher.matches()){
+                return Integer.parseInt(choice);
+            }
+            else
+                System.out.println(s1);
+        }
+    }
 }

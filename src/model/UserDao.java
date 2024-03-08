@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 public interface UserDao {
+    List<User> getAllUserToList();
     List<User> getAllUser();
     void addUser(User user);
     User searchUser();

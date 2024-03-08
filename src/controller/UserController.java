@@ -11,6 +11,9 @@ public class UserController {
     public  List<User> userList(){
         return userDao.getAllUser();
     }
+    public List<User> userListToList(){
+        return userDao.getAllUserToList();
+    }
     public void addUser(User user){
         userDao.addUser(user);
     }
