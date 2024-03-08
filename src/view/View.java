@@ -14,14 +14,7 @@ public class View {
 
     public static void ui() {
         System.out.println("*".repeat(50));
-        System.out.println("Welcome to User Management System");
-        System.out.println("1. Add User");
-        System.out.println("2. View All User");
-        System.out.println("3. Search User");
-        System.out.println("4. Update User");
-        System.out.println("5. Set verify to User");
-        System.out.println("6. Delete User");
-        System.out.println("7. Exit");
+        PrintAsTable.menu();
         System.out.println("*".repeat(50));
         int option = 0;
         do {
@@ -66,6 +59,6 @@ public class View {
                 }
                 default -> System.out.println("# Please input base on option above");
             }
-        } while (option != 7);
+        } while (true);
     }
 }

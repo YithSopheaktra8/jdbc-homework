@@ -5,10 +5,7 @@ import propertyloader.ConnectDb;
 import utils.Validate;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class UserRepository {
     public static List<User> getAllUserToList(){
@@ -81,8 +78,8 @@ public class UserRepository {
             PreparedStatement ps = connection.prepareStatement(sql);
             user = User.builder()
                     .userUuid(UUID.randomUUID().toString())
-                    .userName(Validate.validateInputString("Enter your name: ", "Invalid name", "^[a-zA-Z ]+$", scanner))
-                    .userEmail(Validate.validateInputString("Enter your email: ", "Invalid email", "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", scanner))
+                    .userName(Validate.validateInputString("Enter your name: ", "Invalid name. must be alphabet ", "^[a-zA-Z ]+$", scanner))
+                    .userEmail(Validate.validateInputString("Enter your email: ", "Invalid email. Example (tra@gmail.com)", "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", scanner))
                     .userPassword(Validate.validateInputString("Enter your password: ", "Password must be 8 characters with number and 1 Uppercase with special character\n example : Tra@1234", "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", scanner))
                     .isVerified(false)
                     .build();
@@ -102,10 +99,14 @@ public class UserRepository {
         try (Connection connection = ConnectDb.connectToDb()) {
             PreparedStatement ps = connection.prepareStatement(sql);
             String userUuid = Validate.validateInputString("Enter user uuid: ", "Invalid uuid", "^[a-zA-Z0-9-]+$", new Scanner(System.in));
-            User user = users.stream().filter(u -> u.getUserUuid().equals(userUuid)).findFirst().orElseThrow();
-            ps.setString(1, user.getUserUuid());
-            ps.executeUpdate();
-            System.out.println("User verification status updated successfully");
+            Optional<User> user = users.stream().filter(u -> u.getUserUuid().equals(userUuid)).findFirst();
+            if (user.isPresent()) {
+                ps.setString(1, user.get().getUserUuid());
+                ps.executeUpdate();
+                System.out.println("User deleted successfully");
+            } else {
+                System.out.println("User not found");
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

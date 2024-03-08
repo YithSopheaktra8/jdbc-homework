@@ -50,4 +50,29 @@ public class PrintAsTable {
         table.addCell(user.getIsVerified().toString());
         System.out.println(table.render());
     }
+
+    public static void menu(){
+        String menu = """
+                Welcome to User Management System
+                        1. Add User
+                        2. View All User
+                        3. Search User
+                        4. Update User
+                        5. Set verify to User
+                        6. Delete User
+                        7. Exit
+                """;
+        Table table = new Table(1, BorderStyle.UNICODE_BOX_DOUBLE_BORDER, ShownBorders.SURROUND_HEADER_AND_COLUMNS);
+        CellStyle cellCenter = new CellStyle(CellStyle.HorizontalAlign.center);
+        table.setColumnWidth(0,50,50);
+        table.addCell("Welcome to User Management System",cellCenter);
+        table.addCell("1. Add User",cellCenter);
+        table.addCell("2. View All User",cellCenter);
+        table.addCell("3. Search User",cellCenter);
+        table.addCell("4. Update User",cellCenter);
+        table.addCell("5. Set verify to User",cellCenter);
+        table.addCell("6. Delete User",cellCenter);
+        table.addCell("7. Exit",cellCenter);
+        System.out.println(table.render());
+    }
 }
